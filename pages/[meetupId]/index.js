@@ -6,9 +6,8 @@ import { Fragment } from "react";
 
 dotenv.config();
 
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_NAME = process.env.DB_NAME;
+const MONGODB = process.env.MONGODB_URI;
+
 
 function MeetupDetails(props) {
     return (
@@ -32,7 +31,7 @@ function MeetupDetails(props) {
 
 export async function getStaticPaths() {
   const client = await MongoClient.connect(
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.ug4t9.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    `${MONGODB}`
   );
   const db = client.db();
 
@@ -53,7 +52,7 @@ export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
 
   const client = await MongoClient.connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ug4t9.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+    `${MONGODB}`
   );
   const db = client.db();
 

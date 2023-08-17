@@ -6,9 +6,7 @@ import { Fragment } from "react";
 
 dotenv.config();
 
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_NAME = process.env.DB_NAME;
+const MONGODB = process.env.MONGODB_URI;
 
 function HomePage(props) {
   return (
@@ -27,7 +25,7 @@ function HomePage(props) {
 
 export async function getStaticProps() {
   const client = await MongoClient.connect(
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.ug4t9.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    `${MONGODB}`
   );
   const db = client.db();
 
