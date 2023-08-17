@@ -1,16 +1,33 @@
+import Head from "next/head";
 import { MongoClient } from "mongodb";
 import MeetupList from "@/components/meetups/MeetupList";
 import dotenv from "dotenv";
+import { Fragment } from "react";
 
 dotenv.config();
 
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
+
 function HomePage(props) {
-  return <MeetupList meetups={props.meetups} />;
+  return (
+  <Fragment>
+  <Head>
+    <title>React Meetups</title>
+    <meta
+      name="description"
+      content="Browse a huge list of highly active React meetups!"
+    />
+  </Head>
+  <MeetupList meetups={props.meetups} />
+  </Fragment>
+  );
 }
 
 export async function getStaticProps() {
   const client = await MongoClient.connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ug4t9.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.ug4t9.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
   );
   const db = client.db();
 
@@ -29,7 +46,6 @@ export async function getStaticProps() {
         id: meetup._id.toString(),
       })),
     },
-    revalidate: 10,
   };
 }
 
