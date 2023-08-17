@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { MongoClient } from "mongodb";
 import MeetupList from "@/components/meetups/MeetupList";
-import dotenv from "dotenv";
+//import dotenv from "dotenv";
 import { Fragment } from "react";
 
-dotenv.config();
+//dotenv.config();
 
-const MONGODB = process.env.MONGODB_URI;
+//const MONGODB = process.env.MONGODB_URI;
 
 function HomePage(props) {
   return (
@@ -25,7 +25,8 @@ function HomePage(props) {
 
 export async function getStaticProps() {
   const client = await MongoClient.connect(
-    `${MONGODB}`
+    'mongodb+srv://maxwell:mongodongo@cluster0.ug4t9.mongodb.net/meetups?retryWrites=true&w=majority'
+    //`${MONGODB}`
   );
   const db = client.db();
 
